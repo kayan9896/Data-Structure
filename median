@@ -1,0 +1,52 @@
+int max(int a, int b){
+    if(a>=b) return a;
+    else return b;
+}
+int min(int a, int b){
+    if(a<=b) return a;
+    else return b;
+}
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size){
+    if(nums1Size>nums2Size){
+        int* tmp=nums1;
+        nums1=nums2;
+        nums2=tmp;
+        int temp=nums1Size;
+        nums1Size=nums2Size;
+        nums2Size=temp;
+    }
+    int size=nums1Size+nums2Size;
+    int mid=(size-1)/2;
+    
+    
+    int mid1=(nums1Size-1)/2;
+    int mid2=mid-mid1-1;
+    while(true){
+        int maxOfLeft,minOfRight;
+        if(mid1+1>=nums1Size) minOfRight=nums2[mid2+1];
+        if(mid2+1>=nums2Size) minOfRight=nums1[mid1+1];
+        if(mid1+1<nums1Size&mid2+1<nums2Size) minOfRight=min(nums1[mid1+1],nums2[mid2+1]);
+        if(mid1<0) maxOfLeft=nums2[mid2];
+        if(mid2<0) maxOfLeft=nums1[mid1];
+        if(mid1>=0&mid2>=0) maxOfLeft=max(nums1[mid1],nums2[mid2]);
+        if(maxOfLeft<minOfRight){
+            if(size%2==1) return maxOfLeft;
+            if(size%2==0) return (minOfRight+maxOfLeft)/(double)2;
+        }
+        else{
+            int l,r;
+            if(maxOfLeft=nums1[mid1]){
+                l=0;
+                r=mid1-1;
+                mid1=(l+r)/2;
+                mid2=mid-mid1-1;
+            }else{
+                l=mid1+1;
+                r=nums1Size;
+                mid1=(l+r)/2;
+                mid2=mid-mid1-1;
+            }
+        }
+    }
+    return 0;
+}
