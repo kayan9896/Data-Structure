@@ -1,0 +1,21 @@
+struct ListNode* sortList(struct ListNode* head){
+    if(head==NULL) return NULL;
+    struct ListNode* h=head;
+    while(head!=NULL){
+        int min=head->val;
+        struct ListNode* tmp;
+        struct ListNode* s;
+        tmp=head->next;
+        while(tmp!=NULL){
+            if(tmp->val<min){ 
+                min=tmp->val;3 
+                s=tmp;
+            }
+            tmp=tmp->next;
+        }
+        s->val=head->val;
+        head->val=min;
+        head=head->next;   
+    }
+    return h;
+}
