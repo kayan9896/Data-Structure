@@ -1,0 +1,114 @@
+
+//https://leetcode.com/problems/two-sum/submissions/
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    *returnSize=2;
+    int* r=(int*)malloc(2*sizeof(int));
+    int i,j;
+    for(i=0;i<numsSize-1;i++){
+        for(j=i+1;j<numsSize;j++){
+            if(nums[i]+nums[j]==target){
+                r[0]=i;
+                r[1]=j;
+                return r;
+            }
+        }
+    }
+    return r;
+}
+
+
+
+//https://leetcode.com/problems/add-two-numbers/submissions/
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    struct ListNode* r=(struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* h=r;
+    int c=0;
+    while(l1!=NULL&l2!=NULL){
+        r->next=(struct ListNode*)malloc(sizeof(struct ListNode));
+        r=r->next;
+        int a=l1->val;
+        int b=l2->val;
+        r->val=(a+b+c)%10;
+        if(a+b+c>=10) c=1;
+        else c=0;
+        l1=l1->next;
+        l2=l2->next;
+        
+    }
+    while(l2!=NULL){
+        r->next=(struct ListNode*)malloc(sizeof(struct ListNode));
+        r=r->next;
+        int b=l2->val;
+        r->val=(b+c)%10;
+        if(b+c>=10) c=1;
+        else c=0;
+        l2=l2->next;
+        
+    }
+    while(l1!=NULL){
+        r->next=(struct ListNode*)malloc(sizeof(struct ListNode));
+        r=r->next;
+        int a=l1->val;
+        r->val=(a+c)%10;
+        if(a+c>=10) c=1;
+        else c=0;
+        l1=l1->next;
+        
+    }
+    if(c==1){
+        r->next=(struct ListNode*)malloc(sizeof(struct ListNode));
+        r->next->val=1;
+        r->next->next=NULL;
+    }else{r->next=NULL;}
+    return h->next;
+}
+
+
+//https://leetcode.com/problems/median-of-two-sorted-arrays/submissions/
+int max(int a, int b){
+    if(a>=b) return a;
+    else return b;
+}
+int min(int a, int b){
+    if(a<=b) return a;
+    else return b;
+}
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size){
+    if(nums1Size>nums2Size) return findMedianSortedArrays(nums2, nums2Size, nums1, nums1Size);
+    
+    int size=nums1Size+nums2Size;
+    int mid=(size-1)/2;
+    if(nums1Size==0){
+        if(size%2==1) return nums2[mid];
+        if(size%2==0) return (nums2[mid]+nums2[mid+1])/(double)2;
+    }
+    int l=0;
+    int r=nums1Size;//0
+    
+    while(1){
+        int mid1=(l+r)/2;//0
+        int mid2=(size+1)/2-mid1;//1
+        int maxInLeft, minInRight;
+        if(mid1>=nums1Size) minInRight=nums2[mid2];//rMin1=1000001;            
+        else if(mid2>=nums2Size) minInRight=nums1[mid1];//rMin2=1000001;   
+        else minInRight=min(nums1[mid1],nums2[mid2]);
+        if(mid1<=0) maxInLeft=nums2[mid2-1];//leftMax1=-1000001;   
+        else if(mid2<=0) maxInLeft=nums1[mid1-1];//leftMax2=-1000001;
+        else maxInLeft=max(nums1[mid1-1],nums2[mid2-1]);//   
+        if(maxInLeft<=minInRight) {
+            if(size%2==1) return maxInLeft;
+            if(size%2==0) return (minInRight+maxInLeft)/(double)2;
+        }
+        else{
+            if(mid1>0){
+                if(maxInLeft==nums1[mid1-1]){
+                    r=mid1-1;
+                }else{
+                    l=mid1+1;
+                }
+            }
+            else l=mid1+1;
+        }
+    }
+    return 0;
+}
