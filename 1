@@ -112,3 +112,152 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
     }
     return 0;
 }
+
+
+//https://leetcode.com/problems/container-with-most-water/
+int min(int a, int b){
+    if(a>=b) return b;
+    else return a;
+}
+
+int maxArea(int* height, int heightSize){
+    int i=0;
+    int j=heightSize-1;
+    int s=0;
+    while(i!=j){
+        int h=min(height[i],height[j]);
+        int w=j-i;
+        if(s<h*w) s=h*w;
+        if(height[i]>=height[j]) j-=1;
+        else i+=1;
+    }
+    
+    return s;
+}
+
+
+//https://leetcode.com/problems/swap-nodes-in-pairs/
+struct ListNode* swapPairs(struct ListNode* head){
+    if(head==NULL) return NULL;
+    if(head->next==NULL) return head;
+    struct ListNode* h2=head->next;
+    struct ListNode* tmp=head->next->next;
+    head->next->next=head;
+    head->next=swapPairs(tmp);
+    return h2;
+}
+
+
+//https://leetcode.com/problems/binary-tree-inorder-traversal/
+int s;
+void helper(struct TreeNode* t,int* arr){
+    if(t==NULL) return;
+    if(t->left!=NULL) helper(t->left,arr);
+    arr[s]=t->val;
+    s+=1;
+    if(t->right!=NULL) helper(t->right,arr);
+}
+
+int* inorderTraversal(struct TreeNode* root, int* returnSize){
+    int* r=(int*)malloc(sizeof(int)*(100));
+    s=0;
+    helper(root,r);
+    *returnSize=s;
+    return r;
+}
+
+
+//https://leetcode.com/problems/validate-binary-search-tree/
+int help(struct TreeNode* t, double a, double b){
+    int r1=1;
+    int r2=1;
+    if(t==NULL) return 1;
+    if(t->val<a||t->val>b||t->val==a||t->val==b){
+        return 0;
+    }
+    r1=help(t->left,a,t->val);
+    r2=help(t->right,t->val,b);
+    return r1*r2;
+}
+
+bool isValidBST(struct TreeNode* root){
+    return help(root,-9999999999,9999999999);
+}
+
+
+//https://leetcode.com/problems/same-tree/
+bool isSameTree(struct TreeNode* p, struct TreeNode* q){
+    int r1=1;
+    int r2=1;
+    if(p==NULL&q==NULL) return 1;
+    if((p==NULL&q!=NULL)||(p!=NULL&q==NULL)) return 0;
+    if(p->val!=q->val) return 0;
+    r1=isSameTree(p->left,q->left);
+    r2=isSameTree(p->right,q->right);
+    return r1*r2;
+}
+
+
+//https://leetcode.com/problems/symmetric-tree/
+int symHelper(struct TreeNode* l, struct TreeNode* r){
+    int r1=1;
+    int r2=1;
+    if(l==NULL&r==NULL) return 1;
+    if((l==NULL&r!=NULL)||(l!=NULL&r==NULL)) return 0;
+    if(l->val!=r->val) return 0;
+    r1=symHelper(l->left,r->right);
+    r2=symHelper(l->right,r->left);
+    return r1*r2;
+}
+bool isSymmetric(struct TreeNode* root){
+    return symHelper(root->left,root->right);
+}
+
+
+
+//https://leetcode.com/problems/sort-list/
+struct ListNode* merge(struct ListNode* a, struct ListNode* b){
+    struct ListNode* r=(struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* h=r;
+    while(a!=NULL&b!=NULL){
+        if(a->val<=b->val){
+            r->next=a;
+            r=r->next;
+            a=a->next;
+        } 
+        else{
+            r->next=b;
+            r=r->next;
+            b=b->next;
+        }
+        
+    }
+    if(a!=NULL){
+        r->next=a;
+        
+    }
+    if(b!=NULL){
+        r->next=b;
+        
+    }
+    return h->next;
+}
+struct ListNode* sortList(struct ListNode* head){
+    if(head==NULL) return NULL;
+    if(head->next==NULL) return head;
+    struct ListNode* s=head;
+    struct ListNode* f=head;
+    struct ListNode* mid;
+    while(f!=NULL){
+        f=f->next;
+        if(f!=NULL){
+            mid=s;
+            s=s->next;
+            f=f->next;
+        }
+    }
+    mid->next=NULL;
+    struct ListNode* a=sortList(head);
+    struct ListNode* b=sortList(s);
+    return merge(a,b);
+}
