@@ -1,0 +1,120 @@
+/*int* merge(int* n1, int* n2, int size1, int size2){
+    int i=0;
+    int j=0;
+    int* s=(int*)malloc(sizeof(int)*(size1+size2));
+    while(i<size1&j<size2){
+        if(n1[i]<=n2[j]){
+            s[i+j]=n1[i];
+            i++;
+        }else{
+            s[i+j]=n2[j];
+            j++;
+        }
+    }
+    while(i<size1){
+        s[i+j]=n1[i];
+        i++;
+    }
+    while(j<size2){
+        s[i+j]=n2[j];
+        j++;
+    }
+    return s;
+}
+int* mergeSort(int* arr, int a, int b){
+    int l=a;
+    int r=b;
+    int m=(l+r-1)/2;
+    if(l==r) {
+        int* arr2=(int*)malloc(sizeof(int));
+        arr2[0]=arr[l];
+        return arr2;
+    }
+    int* n1=mergeSort(arr,l,m);
+    int* n2=mergeSort(arr,m+1,r);
+    return merge(n1,n2,m-l+1,r-m);
+}*/
+
+
+/*void merge(int arr[], int temp[], int l, int m, int r) {
+  //TODO: implement merge.
+  int size1=m-l+1;
+  int size2=r-l;
+  int i;
+  int j;
+  for(i=0;i<r-l+1;i++){
+  	temp[i]=arr[l+i];	
+  }
+  i=0;
+  j=size1;
+  while(i<size1&&j<=size2){
+  	if(temp[i]<=temp[j]){
+		arr[l]=temp[i];
+		l++;
+		i++;
+	}
+	if(temp[i]>temp[j]){
+		arr[l]=temp[j];
+		l++;
+		j++;
+	}
+  }
+  while(i<size1){
+  	arr[l]=temp[i];
+	l++;
+	i++;
+  }
+  while(j<size2+1){
+  	arr[l]=temp[j];
+	l++;
+	j++;
+  }
+}
+// TODO: Implement your mergeSort function here
+void mergeSort(int a[], int temp[], int l, int r){
+	if(l<r){
+		int mid=(l+r)/2;
+		mergeSort(a,temp,l, mid);
+		mergeSort(a,temp,mid+1,r);
+		merge(a,temp,l,mid,r);
+	}
+}*/
+int findKthLargest(int* nums, int numsSize, int k){
+    /*int i,j;
+    //if(k<=numsSize/2){
+    int max;
+    for(i=0;i<k;i++){
+        max=i;
+        for(j=i+1;j<numsSize;j++){
+            if(nums[j]>nums[max]) max=j;
+        }
+        int t=nums[i];
+        nums[i]=nums[max];
+        nums[max]=t;
+    }
+    return nums[k-1];
+    /*if(k>numsSize/2){
+    int min;
+    for(i=0;i<k;i++){
+        min=i;
+        for(j=i+1;j<numsSize;j++){
+            if(nums[j]<nums[min]) min=j;
+        }
+        int t=nums[i];
+        nums[i]=nums[min];
+        nums[min]=t;
+    }
+    return nums[numsSize-k];}
+    return 0;*/
+    
+    
+    /*int* nums2=mergeSort(nums,0,numsSize-1);
+    return nums2[numsSize-k];*/
+    
+    
+    /*int* temp=(int*)malloc(numsSize*sizeof(int));
+    int l=0;
+    int r=numsSize-1;
+    mergeSort(nums,temp,l,r);
+    return nums[numsSize-k];*/
+}
