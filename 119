@@ -1,0 +1,23 @@
+int* getRow(int rowIndex, int* returnSize){
+    int row=rowIndex+1;
+    int table[row][row];
+    int i,j;
+    for(i=0;i<row;i++){
+        for(j=0;j<row;j++){
+            table[i][j]=0;
+        }
+    }
+    int* r=(int*)malloc(sizeof(int)*row);
+    for(i=0;i<row;i++){
+        for(j=0;j<row;j++){
+            if(i==0||j==0){
+                table[i][j]=1;
+            }else{
+                table[i][j]=table[i-1][j-1]+table[i-1][j];
+            }
+        }
+    }
+    for(i=0;i<row;i++)
+    r[i]=table[row-1][i];
+    return r;
+}
